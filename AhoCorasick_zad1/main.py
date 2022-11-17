@@ -11,10 +11,10 @@ class AhoCorasickAutomaton:
         return AhoCorasickAutomaton(trie_with_failure_links)
 
     @classmethod
-    def build_trie(cls, dictionary):
+    def build_trie(cls, dictionary):  # czy to nie powinna być metoda Trie?
         node_id = 0
         root = Node(node_id)
-        trie = Trie(root, [root], {node_id: []})
+        trie = Trie(root, [root], {node_id: []})  # użytkownik klasy Trie musi wiedzieć, w jakim formacie są przechowywane krawędzie
 
         for word in dictionary:
             node_id = trie.add_word(word, node_id)
@@ -117,7 +117,7 @@ class Trie:
             return edges[0].end
 
 
-class TrieWithFailureLinks:
+class TrieWithFailureLinks:  # przerost klas
 
     def __init__(self, trie, failure_links):
         self.trie = trie
