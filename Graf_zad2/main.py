@@ -1,6 +1,6 @@
 class Graph:
     def __init__(self, edges):
-        self.edges = edges
+        self.edges = edges  # nie jest dobrze brać krawędzie z zewnątrz, bo użytkownik musi wiedzieć, jak my to chcemy wewnętrznie przechowywać... a w ogóle, to ten atrybut nie jest używany
         self.graph_dictionary = {}
         for start, end in self.edges:
             if start in self.graph_dictionary:
@@ -17,9 +17,9 @@ class Graph:
 
     def delete_vertex(self, vertex):
         if vertex in self.graph_dictionary:
-            del self.graph_dictionary[vertex]
+            del self.graph_dictionary[vertex]   # a co z krawędziami do tego wierzchołka?
 
-    def add_edges(self, vertex, edge):
+    def add_edges(self, vertex, edge):  # nieczytelne nazwy parametrów
         if vertex not in self.graph_dictionary:
             self.add_vertex(vertex)
 
@@ -27,13 +27,12 @@ class Graph:
 
     def deleting_edge(self, vertex, edge):
         if vertex in self.graph_dictionary:
-            my_list = list(self.graph_dictionary[vertex])
-            deleting_index = my_list.index(edge)
+            deleting_index = self.graph_dictionary[vertex].index(edge)
             del self.graph_dictionary[vertex][deleting_index]
             # del self.graph_dictionary[edge][vertex]
 
     def get_all_neighbours(self, vertex):
-        return self.graph_dictionary.get(vertex, "No assigned vertex")
+        return self.graph_dictionary.get(vertex, "No assigned vertex")  # zwrócenie stringa to zły pomysł
 
 
     def dfs(self, vertex):
@@ -48,18 +47,18 @@ class Graph:
             if element not in path:
                 path.append(element)
             if element not in self.graph_dictionary:
-                # leaf node
+                # leaf node # raczej błędna sytuacja; "liście" powinny mieć pustą listę sąsiadów
                 continue
 
             for neighbor_node in self.graph_dictionary[element]:
                 stack_val.append(neighbor_node)
-        return path[:-1]
+        return path[:-1]    # Uwaga: metody nie mają zwracać listy ani krotki, tylko iterator (metody __iter__ i __next__).
         #return DfsIterator(self, vertex)
 
 
     def bfs(self, vertex):
         path = []
-        visited = [vertex]
+        visited = [vertex]  # myląca nazwa
 
         while len(visited) != 0:  
             element = visited.pop()
