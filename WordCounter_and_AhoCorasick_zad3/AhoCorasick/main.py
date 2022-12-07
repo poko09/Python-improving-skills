@@ -1,20 +1,20 @@
 class AhoCorasickAutomaton:
 
     def __init__(self, trie_with_failure_links):
-        self.trie_with_failure_links = trie_with_failure_links
+        self.trie_with_failure_links = trie_with_failure_links  # ta klasa jest właściwie opakowaniem na TrieWithFailureLinks
 
     def __repr__(self) -> str:
         return repr(self.trie_with_failure_links)
 
     @classmethod
-    def build(cls, dictionary):
+    def build(cls, dictionary):  # trochę słaba nazwa parametru - sugeruje przyjmowanie dict'a; może patterns?
         trie = cls.build_trie(dictionary)
         trie_with_failure_links = TrieWithFailureLinks.from_trie(trie)
 
-        return AhoCorasickAutomaton(trie_with_failure_links)
+        return AhoCorasickAutomaton(trie_with_failure_links)  # a tak w ogóle, to czemu tego nie robi konstruktor?
 
     @classmethod
-    def build_trie(cls, dictionary):
+    def build_trie(cls, dictionary):  # czy ta metoda nie powinna być chroniona?
         node_id = 0
         root = Node(node_id)
         trie = Trie(root, [root], {node_id: []})
@@ -26,12 +26,12 @@ class AhoCorasickAutomaton:
 
     def search(self, text):
         current = self.trie_with_failure_links.trie.root
-        found = list()
+        found = []
 
         letter_index = 0
         while letter_index < len(text):
             if current.word is not None:
-                found.append((current.word, letter_index - len(current.word)))
+                found.append((current.word, letter_index - len(current.word)))  # a stan nie może akceptować więcej niż 1 wzorca?
 
             letter = text[letter_index]
 
@@ -55,7 +55,7 @@ class AhoCorasickAutomaton:
 
 class Node:
 
-    def __init__(self, id, word=None):
+    def __init__(self, id, word=None):  # przesłonięcie symbolu wbudowanego
         self.id = id
         self.word = word
 
@@ -72,7 +72,7 @@ class Edge:
     def __repr__(self):
         return f"start={self.start}, end={self.end}, letter={self.letter}"
 
-
+# przerost klas - te dwie poniżej nie są za bardzo przydatne
 class Trie:
 
     def __init__(self, root, nodes, edges):
@@ -138,7 +138,7 @@ class TrieWithFailureLinks:
         return f"trie={repr(self.trie)}, failure_links={repr(self.failure_links)}"
 
     @classmethod
-    def from_trie(cls, trie):
+    def from_trie(cls, trie):  # czemu tego nie robi init?
         failure_links = dict()
 
         def traverse(node, substring):
