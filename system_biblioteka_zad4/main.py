@@ -1,13 +1,15 @@
+# to nie jest zadanie na jeden plik
+
 import json
 import os
 
 
 class Library:
-    path = '/Users/karol/PycharmProjects/system_biblioteka_zad4/list_of_books.json'
+    path = '/Users/karol/PycharmProjects/system_biblioteka_zad4/list_of_books.json'  # proszę nie zaszywać w kodzie bezwzględnej ścieżki; jeżeli już to tylko jako stała na samym wstępie, albo w osobnym pliku (np. config.py)
     books = [{'id': 1, "Author": "Witkiewicz", "Title": "Szewcy", "Borrowed": False},
              {'id': 2, "Author": "Lem", "Title": "Bajki robotow", "Borrowed": False}] # example of adding books to json list
 
-    if os.path.isfile(path) == True:
+    if os.path.isfile(path):
         print("istnieje")
         print("list_of_books.json")
     else:
@@ -21,7 +23,7 @@ class Library:
             sample_load = json.load(read_file)
         return sample_load
 
-    def add_book(self):
+    def add_book(self):  # ta metoda robi za dużo: komunikacja z użytkownikiem, obsługa pliku i tworzenie nowego obiektu książki
         name_of_author = input("Podaj imię autora: ")
         name_of_title = input("Podaj tytuł książki: ")
 
@@ -168,7 +170,7 @@ class Librarian:
 
     def __init__(self):
         self.library_worker = [{'id': 1, "FirstName": "Guido", "LastName": "van Rossum", 'Login': 'Monty'}]
-        self.path = '/Users/karol/PycharmProjects/system_biblioteka_zad4/list_of_workers.json'
+        self.path = '/Users/karol/PycharmProjects/system_biblioteka_zad4/list_of_workers.json'  # jw
         self.login = input("Podaj login bibliotekarza: ")
         input_key = 'Login'
         input_value = self.login
@@ -215,12 +217,12 @@ class Menu:
 
                 while True:
 
-                    reader_menu = int(input("Wybierz opcje dla czytelnika biblioteki: \n"
+                    reader_menu = int(input("Wybierz opcje dla czytelnika biblioteki: \n"  # po to pisaliśmy na zajęciach menu, żeby Pan sobie ułatwił
                                             "1) Zobacz wszystkie ksiazki \n"
                                             "2) Znajdz ksiazke po nazwie autora \n"
                                             "3) Znajdz ksiazke po tytule \n"
                                             "4) Wypożycz książkę \n"
-                                            "5) Wyjscie \n"
+                                            "5) Wyjscie \n"  # a prolongata i rezerwacja?
                                             ">> "))
                     if reader_menu == 1:
                         library.show_all_books()
